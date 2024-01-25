@@ -16,33 +16,64 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-function displayBook(book) {
-    const div = document.createElement("div");
-    div.className = "book";
-
-    const title = document.createElement("h2");
-    title.className = "title";
+function displayBook(book, bookIndex) {
+    generateBookTemplate(bookIndex);
+    const title = document.querySelector(`#B${bookIndex} .title`);
     title.textContent = book.title;
 
-    const author = document.createElement("p");
-    author.className = "author";
-    author.textContent = `By ${book.author}`;
+    const author = document.querySelector(`#B${bookIndex} .author span`);
+    author.textContent = book.author;
 
-    const pages = document.createElement("p");
-    pages.className = "pages";
-    pages.textContent = `No. of pages: ${book.pages}`; 
-
-
-    const read = document.createElement("p");
-    read.className = "read";
-    read.textContent = (book.read)? `Status: read`: `Status: unread`;
-
-    div.appendChild(title);
-    div.appendChild(author);
-    div.appendChild(pages);
-    div.appendChild(read);
-
-    document.body.appendChild(div);
+    const pages = document.querySelector(`#B${bookIndex} .pages span`);
+    pages.textContent = book.pages;
 }
 
-displayBook(myLibrary[0]);
+function generateBookTemplate(bookID) {
+    const bookContainer = document.createElement('div');
+    bookContainer.className = 'bookContainer';
+    bookContainer.id = `B${bookID}`;
+
+    const title = document.createElement('h2');
+    title.className = 'title';
+    bookContainer.appendChild(title);
+
+    const author = document.createElement('p');
+    author.className = 'author';
+    author.innerHTML = 'By <span></span>';
+    bookContainer.appendChild(author);
+
+    const pages = document.createElement('p');
+    pages.className = 'pages';
+    pages.innerHTML = 'No. of pages: <span></span>';
+    bookContainer.appendChild(pages);
+
+    const status = document.createElement('p');
+    status.className = 'status';
+    status.innerHTML = 'Status: ';
+
+    // Adding a Status Select
+    const select = document.createElement('select');
+    select.className = 'status-select';
+
+    optionRead = document.createElement('option');
+    optionRead.setAttribute('value', 'read');
+    optionRead.textContent = 'Read';
+    select.appendChild(optionRead);
+
+    optionUnread = document.createElement('option');
+    optionUnread.setAttribute('value', 'unread');
+    optionUnread.textContent = 'Unread';
+    select.appendChild(optionUnread);
+
+    optionMidway = document.createElement('option');
+    optionMidway.setAttribute('value', 'midway');
+    optionMidway.textContent = 'Midway';
+    select.appendChild(optionMidway);
+
+    status.appendChild(select);
+    bookContainer.appendChild(status);
+
+    document.body.appendChild(bookContainer);
+}
+const newBook = new Book('peepeebook', 'mrpeepee', 1001, true);
+displayBook(newBook, 80);

@@ -1,3 +1,5 @@
-const myBool = true;
+const author = document.createElement('p');
+author.className = 'author';
+author.innerHTML = 'By <span></span>';
 
-myBool? console.log(1+1) : console.log(2+2)
+document.body.appendChild(author);
