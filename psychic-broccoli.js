@@ -1,19 +1,18 @@
 const myLibrary = [
     new Book("jurasic park", "john jurasic", 1023, false),
-    new Book("1984", "george orwell", 532, true)
+    new Book("1984", "george orwell", 532, true),
+    new Book("mutant nija tuertle", "jimmy turtlet", 34, false),
 ];
 
 function Book(title, author, pages, read) {
-  // the constructor...
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
 }
 
-function addBookToLibrary(book) {
-  // do stuff here
-  myLibrary.push(book);
+function addBookToLibrary(book, library) {
+    library.push(book);
 }
 
 function displayBook(book, bookIndex) {
@@ -26,6 +25,9 @@ function displayBook(book, bookIndex) {
 
     const pages = document.querySelector(`#B${bookIndex} .pages span`);
     pages.textContent = book.pages;
+
+    const status = document.querySelector(`#B${bookIndex} .status span`);
+    status.textContent = (book.read)? "Read": "Unread";
 }
 
 function generateBookTemplate(bookID) {
@@ -49,31 +51,21 @@ function generateBookTemplate(bookID) {
 
     const status = document.createElement('p');
     status.className = 'status';
-    status.innerHTML = 'Status: ';
-
-    // Adding a Status Select
-    const select = document.createElement('select');
-    select.className = 'status-select';
-
-    optionRead = document.createElement('option');
-    optionRead.setAttribute('value', 'read');
-    optionRead.textContent = 'Read';
-    select.appendChild(optionRead);
-
-    optionUnread = document.createElement('option');
-    optionUnread.setAttribute('value', 'unread');
-    optionUnread.textContent = 'Unread';
-    select.appendChild(optionUnread);
-
-    optionMidway = document.createElement('option');
-    optionMidway.setAttribute('value', 'midway');
-    optionMidway.textContent = 'Midway';
-    select.appendChild(optionMidway);
-
-    status.appendChild(select);
+    status.innerHTML = 'Status: <span></span>';
     bookContainer.appendChild(status);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'removeBtn';
+    removeBtn.textContent = '- Remove';
+    bookContainer.appendChild(removeBtn);
 
     document.body.appendChild(bookContainer);
 }
-const newBook = new Book('peepeebook', 'mrpeepee', 1001, true);
-displayBook(newBook, 80);
+
+function displayLibrary(library) {
+    for (i = 0; i < library.length; i++) {
+        displayBook(library[i], i);
+    }
+}
+
+displayLibrary(myLibrary);
