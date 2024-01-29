@@ -68,4 +68,6 @@ function displayLibrary(library) {
     }
 }
 
+const removeBtn = document.querySelectorAll(".bookContainer button");
+
 displayLibrary(myLibrary);
